@@ -6,7 +6,7 @@
         // pegar o indice seguinte ao indice atual
         for (int j = i + 1; j < arr.Length; j++)
         {
-            // Se o numero seguinte for maior que o indice atual, então troque o lugar do maior pelo menor
+            // Se o elemento seguinte for maior que o indice atual, então troque o lugar do maior pelo menor
             if (arr[i] >= arr[j])
             {
                 int temp = arr[i];

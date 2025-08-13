@@ -1,2 +1,2 @@
 # AlgoritmosEmCSharp
-Apenas codigos de simples implentações de algoritmos que estou estudando
+Apenas codigos simples de implentações de algoritmos que estou estudando.

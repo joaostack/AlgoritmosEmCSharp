@@ -1,13 +1,8 @@
-﻿namespace BFS;
+namespace Grafos;
 
 public class Graph<T>
 {
-    private Dictionary<T, List<T>> adjacencyList;
-
-    public Graph()
-    {
-        adjacencyList = new Dictionary<T, List<T>>();
-    }
+    private Dictionary<T, List<T>> adjacencyList = new();
 
     public void AddVertex(T vertex)
     {
@@ -17,32 +12,35 @@ public class Graph<T>
         }
     }
 
-    public void AddEdge(T source, T destination)
+    public void AddEdge(T src, T dst)
     {
-        AddVertex(source);
-        AddVertex(destination);
-
-        adjacencyList[source].Add(destination);
-        adjacencyList[destination].Add(source);
+        AddVertex(src);
+        AddVertex(dst);
+        adjacencyList[src].Add(dst);
     }
 
-    public List<T> GetNeighbors(T vertex)
+    public List<T> BFS(T start)
     {
-        if (adjacencyList.ContainsKey(vertex))
+        List<T> visited = new();
+        Queue<T> queue = new();
+        queue.Enqueue(start);
+
+        while (queue.Count > 0)
         {
-            return adjacencyList[vertex];
+            T node = queue.Dequeue();
+
+            if (!visited.Contains(node))
+            {
+                visited.Add(node);
+
+                foreach (var neighbor in adjacencyList[node])
+                {
+                    queue.Enqueue(neighbor);
+                }
+            }
         }
 
-        return new List<T>();
-    }
-
-    public void PrintGraph()
-    {
-        foreach (var entry in adjacencyList)
-        {
-            Console.Write($"Vertex {entry.Key}: ");
-            Console.WriteLine(string.Join(", ", entry.Value));
-        }
+        return visited;
     }
 }
 
@@ -50,18 +48,23 @@ class Program
 {
     static void Main()
     {
-        Graph<string> peoples = new Graph<string>();
-        peoples.AddVertex("Joao");
-        peoples.AddVertex("Lucas");
-        peoples.AddVertex("Julio");
-        peoples.AddVertex("Rafael");
-        peoples.AddVertex("Nathan");
+        var graph = new Graph<string>();
+        graph.AddEdge("vc", "Joanilsda");
+        graph.AddEdge("vc", "Carlendson");
+        graph.AddEdge("vc", "Danisvardo");
+        graph.AddEdge("vc", "Cleonistica");
+        graph.AddEdge("vc", "Marlindston");
+        graph.AddEdge("Joanilsda", "Cleonistica");
+        graph.AddEdge("Joanilsda", "Marlindston");
+        graph.AddEdge("Carlendson", "Anistilgides");
+        graph.AddEdge("Carlendson", "Gabrandeia");
+        graph.AddEdge("Danisvardo", "Cleonistica");
+        graph.AddEdge("Cleonistica", "Marlindston");
 
-        peoples.AddEdge("Joao", "Lucas");
-        peoples.AddEdge("Lucas", "Julio");
-        peoples.AddEdge("Joao", "Rafael");
-        peoples.AddEdge("Rafael", "Nathan");
-
-        peoples.PrintGraph();
+        var bfsResult = graph.BFS("vc");
+        foreach (var vertex in bfsResult)
+        {
+            Console.WriteLine(vertex);
+        }
     }
 }

@@ -20,8 +20,11 @@ public class ProblemaDoTroco
     public static void Main(string[] args)
     {
         var trocos = new List<int>() { 1, 5, 7 };
-        var resultado = ProblemaTroco(11, trocos);
+        trocos.Sort();
+        trocos.Reverse();
         
+        var resultado = ProblemaTroco(11, trocos);
         Console.WriteLine($"Resultado = [{string.Join(", ", resultado)}]");
     }
+
 }
